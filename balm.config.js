@@ -7,6 +7,7 @@ const api = (mix) => {
 
 module.exports = () => {
   return {
+    publicPath: process.env.NODE_ENV === "production" ? "/vueEuchre/" : "/",
     config,
     api
   };
