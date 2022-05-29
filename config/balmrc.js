@@ -23,7 +23,8 @@ module.exports = {
     // }
   },
   roots: {
-    source: appRoot
+    source: appRoot,
+    target: '/vueEuchre/'
   },
   styles: {
     extname: 'scss',
