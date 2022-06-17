@@ -3,14 +3,14 @@
             <Card 
                 class="dealCard"
                 v-if="pullUp"
-                fileName="back"
+                cardName="back"
             :hidden="hideCard"></Card>
         </transition>
         <transition name="shuffling0" >
             <Card 
                 class="dealCard"
                 v-if="cardShuffling"
-                fileName="back"
+                cardName="back"
             :hidden="hideCard"></Card>
         </transition>
         <transition 
@@ -20,21 +20,21 @@
             <Card 
                 class="dealCard"
                 v-if="cardShuffling"
-                fileName="back"
+                cardName="back"
             :hidden="hideCard"></Card>
         </transition>
         <transition name="shuffling2" >
             <Card 
                 class="dealCard"
                 v-if="cardShuffling"
-                fileName="back"
+                cardName="back"
             :hidden="hideCard"></Card>
         </transition>
         <transition name="shuffling3" >
             <Card 
                 class="dealCard"
                 v-if="cardShuffling"
-                fileName="back"
+                cardName="back"
             :hidden="hideCard"></Card>
         </transition>
 </template>

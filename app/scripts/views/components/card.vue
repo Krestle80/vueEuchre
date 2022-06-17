@@ -11,18 +11,48 @@ export default {
     data() {
         
         return{
-             offset : 50
+             offset : 50,
+             cardFileEndings:[
+                'Diamonds/9D.png',
+                'Diamonds/10D.png',
+                'Diamonds/jD.png',
+                'Diamonds/qD.png',
+                'Diamonds/kD.png',
+                'Diamonds/aD.png',
+                'hearts/9H.png',
+                'hearts/10H.png',
+                'hearts/jH.png',
+                'hearts/qH.png',
+                'hearts/kH.png',
+                `hearts/aH.png`,
+                `clubs/9C.png`,
+                `clubs/10C.png`,
+                `clubs/jC.png`,
+                `clubs/qC.png`,
+                `clubs/kC.png`,
+                `clubs/aC.png`,
+                `spades/9S.png`,
+                `spades/10S.png`,
+                `spades/jS.png`,
+                `spades/qS.png`,
+                `spades/kS.png`,
+                `spades/aS.png`
+            ],
+            fileName:''
+
              }
     },
     props: {
-            fileName: {type: String, required: true},
+            cardName: {type: String, required: true},
             hidden: {type: Boolean, required: true},
             handPosition : {type: Number, required: false},
-            handSize : {type: Number}
+            handSize : {type: Number},
+            
     },
     computed: {
         src() {
-            return `../../../cards/${this.hidden ? "back.png": this.fileName}`
+            this.setFileName()
+            return `../../../scripts/assets/cards/${this.hidden ? "back.png": this.fileName}`
         },
         tiltStyle() {
             return `transform: translate(0,${
@@ -33,6 +63,22 @@ export default {
                 : (Number(this.handPosition) - 4 )*63}px) 
                 rotate(${this.handPosition <= 2? (Number(this.handPosition)-2)*10: (Number(this.handPosition)-2)*10}deg) 
                 `
+        }
+    },
+    methods : {
+        setFileName() {
+                        if(this.cardName.split('')[1] === "D"){
+                this.fileName= `Diamonds/${this.cardName}.png`
+            }
+            if(this.cardName.split('')[1] === "H"){
+                this.fileName= `Hearts/${this.cardName}.png`
+            }
+            if(this.cardName.split('')[1] === "C"){
+                this.fileName= `Clubs/${this.cardName}.png`
+            }
+            if(this.cardName.split('')[1] === "S"){
+                this.fileName= `Spades/${this.cardName}.png`
+            }
         }
     }
 }

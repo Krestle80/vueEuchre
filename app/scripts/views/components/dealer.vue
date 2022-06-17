@@ -6,7 +6,7 @@
             class="shuffleCard"
             :style="cssVars"
             v-if="deal.leftTwo"
-            fileName="back"
+            cardName="back"
         :hidden="hideCard">
         </Card>
     </transition>
@@ -15,7 +15,7 @@
             class="shuffleCard"
             :style="cssVars"
             v-if="deal.leftTwo"
-            fileName="back"
+            cardName="back"
         :hidden="hideCard">
         </Card>
     </transition>
@@ -24,7 +24,7 @@
             class="shuffleCard"
             :style="cssVars"
             v-if="deal.leftOne"
-            fileName="back"
+            cardName="back"
         :hidden="hideCard">
         </Card>
     </transition>
@@ -35,7 +35,7 @@
             :style="cssVars"
             v-if="deal.upTwo"
 
-            fileName="back"
+            cardName="back"
         :hidden="hideCard">
         </Card>
     </transition>
@@ -44,7 +44,7 @@
             class="shuffleCard"
             :style="cssVars"
             v-if="deal.upTwo"
-            fileName="back"
+            cardName="back"
         :hidden="hideCard">
         </Card>
     </transition>
@@ -53,7 +53,7 @@
             class="shuffleCard"
             :style="cssVars"
             v-if="deal.upOne"
-            fileName="back"
+            cardName="back"
         :hidden="hideCard">
         </Card>
     </transition>
@@ -63,7 +63,7 @@
             class="shuffleCard"
             :style="cssVars"
             v-if="deal.rightTwo"
-            fileName="back"
+            cardName="back"
         :hidden="hideCard">
         </Card>
     </transition>
@@ -72,7 +72,7 @@
             class="shuffleCard"
             :style="cssVars"
             v-if="deal.rightTwo"
-            fileName="back"
+            cardName="back"
         :hidden="hideCard">
         </Card>
     </transition>
@@ -81,7 +81,7 @@
             class="shuffleCard"
             :style="cssVars"
             v-if="deal.rightOne"
-            fileName="back"
+            cardName="back"
         :hidden="hideCard">
         </Card>
     </transition>
@@ -91,7 +91,7 @@
             class="shuffleCard"
             :style="cssVars"
             v-if="deal.downTwo"
-            fileName="back"
+            cardName="back"
         :hidden="hideCard">
         </Card>
     </transition>
@@ -100,7 +100,7 @@
             class="shuffleCard"
             :style="cssVars"
             v-if="deal.downTwo"
-            fileName="back"
+            cardName="back"
         :hidden="hideCard">
         </Card>
     </transition>
@@ -109,7 +109,7 @@
             class="shuffleCard"
             :style="cssVars"
             v-if="deal.downOne"
-            fileName="back"
+            cardName="back"
         :hidden="hideCard">
         </Card>
     </transition>

@@ -3,7 +3,7 @@
         <div v-for="card, index  in Player1Hand.cards">
 
             <Card
-                :fileName="card"
+                :cardName="card"
                 :hidden="hidden"
                 :handPosition="index"
                 :handSize = "Player1Hand.length"
