@@ -7,7 +7,6 @@
                 aiResponse2: "",
                 aiResponse3: "",
                 aiResponse4: "",
-                trumpCallButtonsToggle:false,
                 p2ResponseToggle: false,
                 p3ResponseToggle: false,
                 p4ResponseToggle: false,
@@ -40,19 +39,26 @@
                 this.aiTrumpCallResponseDisplayPlayer3Deal(responseArray)
             }
             if(this.dealer == 3){
-                this.trumpCallButtonsToggle = true
+                this.togglePlayerTrumpCallButtons()
             }
             },
             callTheTrump(response){
-            response == "Spades!"
-            ? this.result = "S"
-            :response == "Clubs!"
-            ? this.result = "C" 
-            : response == "Diamonds!"
-            ? this.result = "D"
-            : response== "Hearts!"
-            ? this.result = "H"
-            : false
+            if(response == "Spades!"){
+                this.result = "S"
+            }
+            if(response == "Clubs!"){
+                this.result = "C" 
+            }
+            if(response == "Diamonds!"){
+                this.result = "D"
+            }
+            if(response== "Hearts!"){
+                this.result = "H"
+            }
+            if(response == "pass"){
+                return false
+            }
+            else return true 
 
             },
             // two and three have two parts, the other is in the player button function
@@ -61,16 +67,16 @@
             this.p2ResponseToggle = true  
                 setTimeout(()=>{
                     this.p2ResponseToggle = false
-                    if(this.callTheTrump(this.aiResponse2)) return
+                    if(!this.callTheTrump(this.aiResponse2)) return
                     this.p3ResponseToggle = true
                     setTimeout(()=>{
                     this.p3ResponseToggle = false
-                    if(this.callTheTrump(this.aiResponse3)) return
+                    if(!this.callTheTrump(this.aiResponse3)) return
                     this.p4ResponseToggle = true
                     setTimeout(()=>{
                         this.p4ResponseToggle= false
-                        if(this.callTheTrump(this.aiResponse4)) return
-                        this.playerResponses.trumpCallButtonsToggle =true
+                        if(!this.callTheTrump(this.aiResponse4)) return
+                        this.togglePlayerTrumpCallButtons()
                     }, 2000)
                     }, 2000)
             }, 2000)
@@ -79,12 +85,12 @@
                 this.p3ResponseToggle = true  
                 setTimeout(()=>{
                     this.p3ResponseToggle = false
-                    if(this.callTheTrump(this.aiResponse3)) return
+                    if(!this.callTheTrump(this.aiResponse3)) return
                     this.p4ResponseToggle = true
                     setTimeout(()=>{
                     this.p4ResponseToggle = false
-                    if(this.callTheTrump(this.aiResponse4)) return
-                    this.playerResponses.ButtonsToggle =true
+                    if(!this.callTheTrump(this.aiResponse4)) return
+                    this.togglePlayerTrumpCallButtons()
                     }, 2000)
                 }, 2000)
             },
@@ -92,25 +98,25 @@
                 this.p2ResponseToggle = true
                 setTimeout(()=>{
                     this.p2ResponseToggle = false
-                    if(this.callTheTrump(this.aiResponse2)) return
+                    if(!this.callTheTrump(this.aiResponse2)) return
                 }, 2000)
             },
             aiTrumpCallResponseDisplayPlayer3Deal(){
                 this.p4ResponseToggle = true  
                 setTimeout(()=>{
                     this.p4ResponseToggle = false
-                    if(this.callTheTrump(this.aiResponse4)) return
-                    this.trumpCallButtonsToggle = true
+                    if(!this.callTheTrump(this.aiResponse4)) return
+                    this.togglePlayerTrumpCallButtons()
                 }, 2000)
             },
             aiTrumpCallResponseDisplayPlayer3DealPart2() {
                 this.p2ResponseToggle = true
                 setTimeout(()=>{
                     this.p2ResponseToggle = false
-                    if(this.callTheTrump(this.aiResponse2)) return
+                    if(!this.callTheTrump(this.aiResponse2)) return
                     this.p3ResponseToggle = true
                     setTimeout(()=>{
-                    if(this.callTheTrump(this.aiResponse3)) return
+                    if(!this.callTheTrump(this.aiResponse3)) return
                     this.p3ResponseToggle = false}, 2000)
                 }, 2000)
             },
@@ -118,35 +124,36 @@
                 this.p2ResponseToggle = true
                 setTimeout(()=>{
                     this.p2ResponseToggle = false
-                    if(this.callTheTrump(this.aiResponse2)) return
+                    if(!this.callTheTrump(this.aiResponse2)) return
                     this.p3ResponseToggle = true
                     setTimeout(()=>{
                     this.p3ResponseToggle = false
-                    if(this.callTheTrump(this.aiResponse3)) return
+                    if(!this.callTheTrump(this.aiResponse3)) return
                     this.p4ResponseToggle = true
                     setTimeout(()=>{
-                        if(this.callTheTrump(this.aiResponse4)) return
+                        if(!this.callTheTrump(this.aiResponse4)) return
                         this.p4ResponseToggle = false
                     }, 2000)
                     })
                 },2000)
             },
+            togglePlayerTrumpCallButtons(){
+                this.$emit('trumpCallButtonsToggle')
+            }
         },
         watch : {
             startDisplayToggle() {
+                console.log("Starting within the display")
                 this.trumpCall(this.trumpAiResponse)
             },
             p2ResponseToggle(){
-                this.emit("p2ResponseToggle")
+                this.$emit("p2ResponseToggle")
             },
             p3ResponseToggle(){
-                this.emit("p3ResponseToggle")
+                this.$emit("p3ResponseToggle")
             },
             p4ResponseToggle(){
-                this.emit("p4ResponseToggle")
-            },
-            trumpCallButtonsToggle(){
-                this.emit("trumpCallButtonsToggle")
+                this.$emit("p4ResponseToggle")
             },
             result(){
                 this.$emit("newTrump", this.result)

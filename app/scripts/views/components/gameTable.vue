@@ -2,33 +2,42 @@
     <div  v-if="dealing" class="startHandHolder">
 
         <ui-button 
-            v-if="togglePlayerResponseButtons" 
+            v-if="toggleTopCardPlayerResponseButtons" 
             class="passButton choiceButtons"
-            @click="playerResponseHandler('pass')"
+            @click="topCardPlayerResponseHandler('pass')"
                 >Pass
-            </ui-button>
-            <div class="topCardHolder" v-if="topCard">
-                <Transition name="flipFront">
-                    <Card 
+        </ui-button>
+        <ui-button 
+            v-if="toggleTrumpPlayerResponseButtons" 
+            class="spadeButton choiceButtons"
+            @click="trumpPlayerResponseHandler('s')"
+                >
+                <div>
+                    <image src="../../assets/suits/spade" class="spade suitIcon"></image>
+                </div>
+        </ui-button>
+        <div class="topCardHolder" v-if="topCard">
+            <Transition name="flipFront">
+                <Card 
                         class="topCardFront"
                         v-if="topCardFront"
                         :cardName="topCardName"
                         :hidden="hideCard">
-                    </Card>
-                </Transition>
-                <Transition name="flipBack">
-                    <Card 
-                        class="topCardBack"
-                        v-if="!topCardFront"
-                        :cardName="topCardName"
-                        :hidden="hideCard">
-                    </Card>
-                </Transition>
-            </div>
+                </Card>
+            </Transition>
+            <Transition name="flipBack">
+                <Card 
+                    class="topCardBack"
+                    v-if="!topCardFront"
+                    :cardName="topCardName"
+                    :hidden="hideCard">
+                </Card>
+            </Transition>
+        </div>
         <ui-button 
-            v-if="togglePlayerResponseButtons" 
+            v-if="toggleTopCardPlayerResponseButtons" 
             class="pickUpButton choiceButtons"
-            @click="playerResponseHandler('pickUp')"
+            @click="topCardPlayerResponseHandler('pickUp')"
             >Pick Up
         </ui-button>
         <!-- animation components -->
@@ -74,7 +83,8 @@
             dealer: {type: Number},
             startDeal: {type:Boolean},
             topCardName: {type:String},
-            togglePlayerResponseButtons: {type: Boolean},
+            toggleTopCardPlayerResponseButtons: {type: Boolean},
+            toggleTrumpPlayerResponseButtons: {type: Boolean},
 
             
         },
@@ -98,7 +108,7 @@
                 this.shuffled= false
                 this.$emit("presentCards", true)
             },
-            playerResponseHandler(choice) {
+            topCardPlayerResponseHandler(choice) {
                 console.log(choice)
                 this.$emit("topCardPlayerResponse", choice)
             }
@@ -164,6 +174,9 @@
     }
     .passButton {
     transform: translate(400%, 0);
+    }
+    .spadeButton {
+        transform: translate(-400%, -120%);
     }
     .choiceButtons{
     /* background-color: rgb(179, 255, 179); */

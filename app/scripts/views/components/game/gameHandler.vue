@@ -4,12 +4,12 @@
         :pickUpOrPassPlayerResponse="pickUpOrPassPlayerResponse"
         :dealer="dealer"
         :startDisplayToggle="pickUpOrPassToggle"
-        :player2DealingPart2="pickUpOrPassPlayer2DealPart2Toggle"
-        :player3DealingPart2="pickUpOrPassPlayer3DealPart2Toggle"
-        @p2ResponseToggled="p2ResponseToggleCarrier"
-        @p3ResponseToggled="p3ResponseToggleCarrier"
-        @p4ResponseToggled="p4ResponseToggleCarrier"
-        @togglePickUpOrPassButtons="togglePickUpOrPassButtonsResponseCarrier"
+        :player2DealPart2Toggle="pickUpOrPassPlayer2DealPart2Toggle"
+        :player3DealPart2Toggle="pickUpOrPassPlayer3DealPart2Toggle"
+        @p2ResponseToggle="p2ResponseToggleCarrier"
+        @p3ResponseToggle="p3ResponseToggleCarrier"
+        @p4ResponseToggle="p4ResponseToggleCarrier"
+        @pickUpOrPassButtons="togglePickUpOrPassButtonsResponseCarrier"
         @result="pickUpOrPassResultHandler"
     ></PickUpOrPassDisplayHandler>
     <TrumpCallDisplayHandler
@@ -19,10 +19,10 @@
         :startDisplayToggle="trumpCallDisplayToggle"
         :player2DealingPart2="trumpCallPlayer2DealPart2Toggle"
         :player3DealingPart2="trumpCallPlayer3DealPart2Toggle"
-        @p2ResponseToggled="p2ResponseToggleCarrier"
-        @p3ResponseToggled="p3ResponseToggleCarrier"
-        @p4ResponseToggled="p4ResponseToggleCarrier"
-        @trumpCallButtonsToggle=""
+        @p2ResponseToggle="p2ResponseToggleCarrier"
+        @p3ResponseToggle="p3ResponseToggleCarrier"
+        @p4ResponseToggle="p4ResponseToggleCarrier"
+        @trumpCallButtonsToggle="trumpCallButtonsToggleCarrier"
         @result="newTrump"
     ></TrumpCallDisplayHandler>
 </template>
@@ -36,7 +36,8 @@
     import playHandHandler from "./playHandHandler.vue";
     export default {
         name:"GameHandler",
-        emits: ["newTrump", "pickUpOrPassButtonsToggle", "trumpCallButtonsToggle", "roundWinner", "awaitingPlayerCard"],
+        emits: ["newTrump", "pickUpOrPassButtonsToggle", "trumpCallButtonsToggle",
+        "p2ResponseToggle", "p3ResponseToggle", "p4ResponseToggle", "roundWinner", "awaitingPlayerCard", "trumpCallAiRequest"],
         props: {
             pickUpOrPassToggle:{type:Boolean},
             pickUpOrPassPlayer2DealPart2Toggle:{type:Boolean},
@@ -58,6 +59,7 @@
                 this.$emit("newTrump", trump)
             },
             togglePickUpOrPassButtonsResponseCarrier(){
+                console.log(this)
                 this.$emit("pickUpOrPassButtonsToggle")
             },
             p2ResponseToggleCarrier(){
@@ -70,12 +72,16 @@
                 this.$emit("p4ResponseToggle")
             },
             pickUpOrPassResultHandler(response){
-                if( response = "pickUp"){
+                console.log(response)
+                if( response == "pickUp"){
                     this.newTrump(this.topCardName.split('')[1])
                 }
                 else {  
-                    this.trumpCallDisplayToggle = !this.trumpCallDisplayToggle
+                    this.$emit("trumpCallAiRequest")
                 }
+            },
+            trumpCallButtonsToggleCarrier () {
+                this.$emit("trumpCallButtonsToggle")
             }
         },
         components :{

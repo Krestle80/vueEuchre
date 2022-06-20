@@ -11,20 +11,24 @@
                 p2ResponseToggle: false,
                 p3ResponseToggle: false,
                 p4ResponseToggle: false,
-
+                trumpCallToggle:false,
+                topCardPickedUp:false,
                 
             }
         },
-            emits: ["p2ResponseToggled", "p3ResponseToggled", "p4ResponseToggled", "pickUpOrPassButtons"],
+            emits: ["p2ResponseToggle", "p3ResponseToggle", "p4ResponseToggle", "pickUpOrPassButtons", "result"],
         props: {
             pickUpOrPassAiResponse: {type:Array},
             pickUpOrPassPlayerResponse: {type:String},
             dealer:{type:Number},
-            startDisplayToggle:{type:Boolean}
+            startDisplayToggle:{type:Boolean}, 
+            player2DealPart2Toggle:{type:Boolean},
+            player3DealPart2Toggle:{type:Boolean},
         },
         methods : {
             topCardTrumpCall(responseArray){
                 console.log(responseArray)
+                this.topCardPickedUp = false
                 this.aiResponse2 = responseArray[0]
                 this.aiResponse3 = responseArray[1]
                 this.aiResponse4 = responseArray[2]
@@ -93,8 +97,8 @@
                 this.p2ResponseToggle = true
                 setTimeout(()=>{
                     this.p2ResponseToggle = false
-                    this.processToggles.aiTrumpCall = !this.processToggles.aiTrumpCall
-                    console.log(this.processToggles.aiTrumpCall)
+                    this.trumpCallToggle = !this.trumpCallToggle
+                    console.log(this.trumpCallToggle)
                 }, 2000)
                 },
                 aiTopCardResponseDisplayPlayer3Deal(){
@@ -123,7 +127,7 @@
                         return
                     }
                     this.p3ResponseToggle = false}, 2000)
-                    this.processToggles.aiTrumpCall = !this.processToggles.aiTrumpCall
+                    this.trumpCallToggle = !this.trumpCallToggle
                 }, 2000)
                 },
                 aiTopCardResponseDisplayPlayer4Deal(){
@@ -148,7 +152,7 @@
                         return
                         }
                         this.p4ResponseToggle = false
-                        this.processToggles.aiTrumpCall = !this.processToggles.aiTrumpCall
+                        this.trumpCallToggle = !this.trumpCallToggle
                     }, 2000)
                     })
                 },2000)
@@ -162,14 +166,30 @@
                 this.$emit("pickUpOrPassButtons")
             },
             p2ResponseToggle() {
-                this.$emit("p2ResponseToggled")
+                this.$emit("p2ResponseToggle")
             },
-            p3ResponseToggle() {console.log(this)
-                this.$emit("p3ResponseToggled",this.p3ResponseToggle)
+            p3ResponseToggle() {console.log(this.emits)
+                this.$emit("p3ResponseToggle")
             },
             p4ResponseToggle() {
-                this.$emit("p4ResponseToggled")
+                this.$emit("p4ResponseToggle")
             },
+            player2DealPart2Toggle() {
+                console.log("player two deal part two")
+                this.aiTopcardResponseDisplayPlayer2DealPart2()
+            },
+            player3DealPart2Toggle() {
+                this.aiTopcardResponseDisplayPlayer3DealPart2()
+            },
+            trumpCallToggle() {
+                console.log('line 185')
+                this.$emit("result", "pass")
+            },
+            topCardPickedUp() {
+                if(this.topCardPickedUp == true){
+                    this.$emit("result", "pickUp")
+                }
+            }
         }
     }
 </script>

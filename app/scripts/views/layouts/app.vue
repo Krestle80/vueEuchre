@@ -18,7 +18,8 @@
             :dealer="dealer"
             :startDeal="processToggles.dealInitiator"
             :topCardName="topCard"
-            :togglePlayerResponseButtons="playerResponses.pickUpOrPassButtonsToggle"
+            :toggleTopCardPlayerResponseButtons="playerResponses.pickUpOrPassButtonsToggle"
+            :toggleTrumpPlayerResponseButtons="playerResponses.trumpButtonsToggle"
             @presentCards="displayDealtCards"
             @topCardPlayerResponse="topCardHumanPlayerResponseHandler"
             @trumpPlayerResponse="trumpCallHumanPlayerResponseHandler"
@@ -71,8 +72,13 @@
     :pickUpOrPassPlayerResponse="playerResponses.pickUpOrPassResponse"
     :trumpAiResponse="aiResponses.trumpCallArray"
     :trumpPlayerResponse="playerResponses.trumpResponse"
+    @p2ResponseToggle="p2ResponseToggler"
+    @p3ResponseToggle="p3ResponseToggler"
+    @p4ResponseToggle="p4ResponseToggler"
     @newTrump="setTrump"
     @pickUpOrPassButtonsToggle="togglePickUpOrPassButtons"
+    @trumpCallAiRequest="aiTrumpCallInitiator"
+    @trumpCallButtonsToggle="toggleTrumpButtons"
   ></GameHandler>
 </template>
 
@@ -126,6 +132,8 @@ export default {
         displayTrumpCallResults:false,
         displayTrumpCallPlayer2Dealp2:false,
         displayTrumpCallPlayer3Dealp2:false,
+        displayTrumpCallResults: false,
+
       },
       fullDeck : [
         '9D',
@@ -193,18 +201,37 @@ export default {
 
     topCardTrumpCallToggler(response){
       this.aiResponses.topCardCallArray = response
+      this.aiResponses.player2 = response[0]
+      this.aiResponses.player3 = response[1]
+      this.aiResponses.player4 = response[2]
       this.processToggles.displayTopCardResults = !this.processToggles.displayTopCardResults
     },  
 
     topCardButtonsToggler(){
       this.playerResponses.pickUpOrPassButtonsToggle = !this.playerResponses.pickUpOrPassButtonsToggle
     },
+    aiTrumpCallInitiator(){
+      this.processToggles.aiTrumpCall = !this.processToggles.aiTrumpCall
+    },
     trumpCallToggler(response) {
+      console.log("trumpCallDisplayStart")
       this.aiResponses.trumpCallArray = response
-      this.processToggles.displayTrumpCardResults = !this.processToggles.displayTrumpCardResults
+      this.aiResponses.player2 = response[0]
+      this.aiResponses.player3 = response[1]
+      this.aiResponses.player4 = response[2]
+      this.processToggles.displayTrumpCallResults = !this.processToggles.displayTrumpCallResults
     },
     
-    
+    p2ResponseToggler() {
+      this.aiResponses.p2ResponseToggle = !this.aiResponses.p2ResponseToggle
+    },
+    p3ResponseToggler() {
+      this.aiResponses.p3ResponseToggle = !this.aiResponses.p3ResponseToggle
+      console.log("app")
+    },
+    p4ResponseToggler() {
+      this.aiResponses.p4ResponseToggle = !this.aiResponses.p4ResponseToggle
+    },
     updateDealersHand(hand){
       if(this.dealer == 0){
         this.hands.player1Hand = hand
