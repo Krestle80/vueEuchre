@@ -25,19 +25,22 @@
         @trumpCallButtonsToggle="trumpCallButtonsToggleCarrier"
         @result="newTrump"
     ></TrumpCallDisplayHandler>
+    <PlayRoundHandler
+        :startRoundToggle="roundToggle"
+        :finishRoundToggle="roundPt2Toggle"
+        :startingPlayer="roundStartingPlayer"
+        @pickCard="playCard"
+    ></PlayRoundHandler>
 </template>
-    <!-- <PlayHandHandler
-    
-    ></PlayHandHandler> -->
 
 <script>
     import PickUpOrPassDisplayHandler from "./PickUpOrPasssDisplayHandler.vue";
     import TrumpCallDisplayHandler from "./trumpCallDisplayHandler.vue";
-    import playHandHandler from "./playHandHandler.vue";
+    import PlayRoundHandler from "./playRoundHandler.vue";
     export default {
         name:"GameHandler",
         emits: ["newTrump", "pickUpOrPassButtonsToggle", "trumpCallButtonsToggle",
-        "p2ResponseToggle", "p3ResponseToggle", "p4ResponseToggle", "roundWinner", "awaitingPlayerCard", "trumpCallAiRequest"],
+        "p2ResponseToggle", "p3ResponseToggle", "p4ResponseToggle", "pickUp", "trumpCallAiRequest", "roundWinner", "awaitingPlayerCard", "trumpCalled", "playCard"],
         props: {
             pickUpOrPassToggle:{type:Boolean},
             pickUpOrPassPlayer2DealPart2Toggle:{type:Boolean},
@@ -52,6 +55,9 @@
             pickUpOrPassPlayerResponse:{type:String},
             trumpAiResponse:{type:Array},
             trumpPlayerResponse:{type:String},
+            roundToggle:{type:Boolean},
+            roundPt2Toggle:{type:Boolean},
+            roundStartingPlayer:{type:Number}
 
         },
         methods: {
@@ -75,6 +81,7 @@
                 console.log(response)
                 if( response == "pickUp"){
                     this.newTrump(this.topCardName.split('')[1])
+                    this.$emit("pickUp")
                 }
                 else {  
                     this.$emit("trumpCallAiRequest")
@@ -82,11 +89,19 @@
             },
             trumpCallButtonsToggleCarrier () {
                 this.$emit("trumpCallButtonsToggle")
+            },
+            trumpCallResultHandler(res){
+                this.newTrump(res)
+                this.$emit("trumpCalled")
+            },
+            playCard(player){
+                this.$emit("playCard", player)
             }
         },
         components :{
             PickUpOrPassDisplayHandler,
             TrumpCallDisplayHandler,
+            PlayRoundHandler
         }
     }
 </script>

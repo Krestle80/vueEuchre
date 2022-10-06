@@ -117,7 +117,7 @@
     <!-- deals cards left -->
 </template>
 <script>
-import Card from './card'
+import Card from '../card'
 export default {
     name: 'Dealer',
     data() {
@@ -143,7 +143,7 @@ export default {
     },
     emits : ['finishedDealing'],
     mounted() {
-        if(this.playerDealing == 1){
+        if(this.playerDealing == 0){
             this.deal.leftTwo = true
             
             setTimeout(()=>{
@@ -189,7 +189,7 @@ export default {
                 },500)
             },500)
         }
-        if(this.playerDealing == 2){
+        if(this.playerDealing == 1){
             this.deal.upTwo = true
             
             setTimeout(()=>{
@@ -235,7 +235,7 @@ export default {
                 },500)
             },500)
         }
-        if(this.playerDealing == 3){
+        if(this.playerDealing == 2){
             this.deal.rightTwo = true
             
             setTimeout(()=>{
@@ -281,7 +281,7 @@ export default {
                 },500)
             },500)
         }
-        if(this.playerDealing == 4){
+        if(this.playerDealing == 3){
             this.deal.downTwo = true
             
             setTimeout(()=>{

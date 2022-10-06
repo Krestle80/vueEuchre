@@ -6,7 +6,8 @@
                 :cardName="card"
                 :hidden="hidden"
                 :handPosition="index"
-                :handSize = "Player1Hand.length"
+                :handSize = "player1Cards.length"
+                @cardPlayed = "carryPlayedCard"
                 />
             
         </div>
@@ -24,9 +25,14 @@
             }
         },
         props : {
-            player1Cards: {type: Array, required: true}
+            player1Cards: {type: Array, required: true},
+            hideHandToggle: {type: Boolean}
         },
-        get() {
+        emits: ["playedCard"],
+        methods : {
+            carryPlayedCard(position){
+                this.$emit('playedCard', position)
+            }
 
         },
         components: {
@@ -41,5 +47,8 @@
         width: 100%;
         display: flex;
         justify-content: center;
+    }
+    .handCard {
+        transition-duration: 0.5s;
     }
 </style>

@@ -39,7 +39,7 @@
         </transition>
 </template>
 <script>
-    import Card from './card'
+    import Card from '../card'
     export default {
         name:'Shuffle',
         data(){

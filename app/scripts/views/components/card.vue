@@ -1,10 +1,12 @@
 <template>
     <div class= "cardBack" :style="tiltStyle">
-        <img id="card" :src="src" />
+        <img id="card" :src="src" @click="playCard(index)"/>
     </div>
 </template>
 
 <script>
+import { thisTypeAnnotation } from '@babel/types'
+
 
 export default {
     name: 'Card',
@@ -49,25 +51,79 @@ export default {
             handSize : {type: Number},
             
     },
+    emits:["cardPlayed"],
     computed: {
         src() {
             this.setFileName()
             return `../../../scripts/assets/cards/${this.hidden ? "back.png": this.fileName}`
         },
+        //adds transform styling to each card if its in a hand
         tiltStyle() {
             return `transform: translate(0,${
-                this.handPosition <= 2
-                ?this.handPosition <2
-                ?Number(this.handPosition)*-63
-                :this.handPosition*-49
-                : (Number(this.handPosition) - 4 )*63}px) 
-                rotate(${this.handPosition <= 2? (Number(this.handPosition)-2)*10: (Number(this.handPosition)-2)*10}deg) 
-                `
+                    this.handSize <= 2
+                        ?  0 
+                    :this.handSize == 3
+                        ? this.handPosition == 0 
+                        ? 0
+                        : this.handPosition == 1 
+                        ? -12
+                        : 0
+                    :this.handSize == 4 
+                        ? this.handPosition == 0
+                        ? 0
+                        : this.handPosition == 1
+                        ? -12
+                        :this.handPosition == 2
+                        ? -12
+                        : 0
+                    :this.handSize == 5
+                        ?this.handPosition <= 2
+                        ?this.handPosition <2
+                        ?Number(this.handPosition)*-27
+                        :this.handPosition*-20
+                        : (Number(this.handPosition) - 4 )*27
+                    //starts hand size of six
+                    :this.handPosition <= 2
+                        ? this.handPosition*-12
+                        :(this.handPosition-5)*12
+                }%) 
+                rotate(${
+                        this.handSize == 1
+                            ?0 
+                        :this.handSize == 2 
+                            ? this.handPosition == 0 
+                            ? -6
+                            :6
+                        :this.handSize == 3
+                            ? this.handPosition == 0
+                            ? -8
+                            : this.handPosition == 1
+                            ? 0
+                            : 8
+                        :this.handSize == 4 
+                            ? this.handPosition == 0 
+                            ? -8
+                            :this.handPosition == 1 
+                            ? -4
+                            :this.handPosition == 2 
+                            ? 4
+                            : 8 
+                        :this.handSize == 5
+                            ?this.handPosition <= 2
+                            ? (Number(this.handPosition)-2)*12
+                            :this.handPosition >2 
+                            ?(Number(this.handPosition)-2)*12
+                            :0
+                        :this.handPosition <= 2
+                            ?(this.handPosition-5)*2
+                            : this.handPosition*2
+                        
+                }deg)`
         }
     },
     methods : {
         setFileName() {
-                        if(this.cardName.split('')[1] === "D"){
+            if(this.cardName.split('')[1] === "D"){
                 this.fileName= `Diamonds/${this.cardName}.png`
             }
             if(this.cardName.split('')[1] === "H"){
@@ -78,6 +134,11 @@ export default {
             }
             if(this.cardName.split('')[1] === "S"){
                 this.fileName= `Spades/${this.cardName}.png`
+            }
+        },
+        playCard() {
+            if(this.handPosition || this.handPosition == 0){
+                this.$emit('cardPlayed', this.handPosition)
             }
         }
     }
@@ -93,6 +154,7 @@ export default {
         border-radius: 15px;
         background-color: white;
         box-shadow: 5px 5px 10px black;
+        transition-duration: 00.5s;
     }
     .cardBack:hover {
        background-color: wheat;

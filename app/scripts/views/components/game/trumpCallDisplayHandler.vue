@@ -55,10 +55,10 @@
             if(response== "Hearts!"){
                 this.result = "H"
             }
-            if(response == "pass"){
-                return false
+            if(response == "Pass"){
+                return true
             }
-            else return true 
+            else return false 
 
             },
             // two and three have two parts, the other is in the player button function
