@@ -32,26 +32,14 @@
         </div>
         <div>
 
-          <ui-button @click="deal" style    ="background-color: aliceblue;">here
+          <ui-button @click="deal" style    ="background-color: aliceblue;">deal
           </ui-button>
           <ui-icon :size="48" class="icon">account_circle</ui-icon>
           <div v-if="aiResponses.p4ResponseToggle" class="aiResponse" >{{aiResponses.player4}}</div>  
           
         </div>
     </div>
-    <ui-Button style="z-index: 7;" @click="addCard">
-        add Card
-    </ui-Button>
-    <ui-Button style="z-index: 7;" @click="removeCard">
-      remove Card
-    </ui-Button>
     <div class="">
-      <!-- <ui-card class = "playingCard " id="h9">
-        <Card
-          :fileName="fileName"
-          :hidden="hidden"
-        />
-      </ui-card> -->
       <Hand 
         v-bind:player1Cards='hands.player1Hand' 
         @playedCard="humanCardHandler"
@@ -211,21 +199,6 @@ export default {
     }
   },
   methods: {
-    addCard() {
-      this.animatePlayedCardsData.p1Toggle = !this.animatePlayedCardsData.p1Toggle
-      this.animatePlayedCardsData.p2Toggle = !this.animatePlayedCardsData.p2Toggle
-      this.animatePlayedCardsData.p3Toggle = !this.animatePlayedCardsData.p3Toggle
-      this.animatePlayedCardsData.p4Toggle = !this.animatePlayedCardsData.p4Toggle
-      this.animatePlayedCardsData.roundWinner = 4
-    },
-    removeCard(){
-      this.animatePlayedCardsData.roundWinner = 0
-      this.animatePlayedCardsData.p1Toggle = !this.animatePlayedCardsData.p1Toggle
-      this.animatePlayedCardsData.p2Toggle = !this.animatePlayedCardsData.p2Toggle
-      this.animatePlayedCardsData.p3Toggle = !this.animatePlayedCardsData.p3Toggle
-      this.animatePlayedCardsData.p4Toggle = !this.animatePlayedCardsData.p4Toggle
-
-    },
     deal() {
       this.processToggles.dealInitiator = !this.processToggles.dealInitiator
     },
@@ -673,11 +646,6 @@ export default {
     Ai,
     GameHandler
   },
-  // setup() {
-  //   return {
-  //     logo
-  //   };
-  // }
 };
 </script>
 
